@@ -25,7 +25,8 @@ blob_rect = blob_surface.get_rect(midbottom = (700, 300 ))
 
 dead_surface = big_font.render('YOU DIED SUCKER', True, 'Black')
 dead_rect = dead_surface.get_rect(midbottom = (400, 200))
-
+instruction_surface = test_font.render('(press space to try again)',True, 'black')
+instruction_rect = instruction_surface.get_rect(midbottom = (400,300))
 player_surface = pygame.image.load('blob.png').convert_alpha()
 player_rect = player_surface.get_rect(midbottom = (50, 300))
 player_gravity = 0
@@ -37,13 +38,16 @@ while True:
             pygame.quit()
             exit()
 
+        if game_active:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and player_rect.bottom >= 300:
+                    player_gravity = -20
 
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and player_rect.bottom >= 300:
-                player_gravity = -20
-                
-
+        else:
+            if event.type == pygame.KEYDOWN and pygame.K_SPACE:
+                game_active = True
+                blob_rect.left = 800
+            
     if game_active:  
         screen.blit(sky_surface,(0,0))
         screen.blit(ground_surface,(0,300))
@@ -68,6 +72,8 @@ while True:
     else:
         screen.fill('White')
         screen.blit(dead_surface, dead_rect)
+        screen.blit(instruction_surface, instruction_rect)
+        
     
 
 
