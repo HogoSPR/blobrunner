@@ -5,12 +5,17 @@ def display_score():
     current_time = pygame.time.get_ticks() - start_time
     score_surface = test_font.render(f'{current_time}',False,'black')
     score_rect = score_surface.get_rect(center = (400,50))
-
-    if current_time >= 10000:
+   
+    if current_time >= 20000:
+        screen.blit(ultrabeast_mode, ultrabeast_rect)
+        blob_rect.x -=17
+    
+    elif current_time >= 10000:
         screen.blit(beast_mode, beast_rect)
         blob_rect.x -=10
-
     screen.blit(score_surface, score_rect)
+
+    
 
 pygame.init()
 screen = pygame.display.set_mode((800,400))
@@ -27,8 +32,8 @@ sky_surface.fill('white')
 ground_surface = pygame.Surface((800,5))
 ground_surface.fill('black')
 
-#score_surface = test_font.render('blob runner', True, 'black')
-#score_rect = score_surface.get_rect(center = (400, 50))
+ultrabeast_mode = test_font.render('ULTRA BEAST MODE', True, 'Purple')
+ultrabeast_rect = ultrabeast_mode.get_rect(midbottom = (400, 100))
 
 blob_surface = pygame.image.load('bob.png').convert_alpha()
 blob_rect = blob_surface.get_rect(midbottom = (700, 300 ))
