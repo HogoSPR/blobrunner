@@ -1,6 +1,11 @@
 import pygame
 from sys import exit
 
+def display_score():
+    current_time = pygame.time.get_ticks() - start_time
+    score_surface = test_font.render(f'{current_time}',False,'black')
+    score_rect = score_surface.get_rect(center = (400,50))
+    screen.blit(score_surface, score_rect)
 
 pygame.init()
 screen = pygame.display.set_mode((800,400))
@@ -9,7 +14,7 @@ clock = pygame.time.Clock()
 test_font = pygame.font.Font('Pixeltype.ttf', 50)
 big_font = pygame.font.Font('Pixeltype.ttf', 100)
 game_active = True
-
+start_time = 0
 
 sky_surface = pygame.Surface((800,400))
 sky_surface.fill('white')
@@ -17,8 +22,8 @@ sky_surface.fill('white')
 ground_surface = pygame.Surface((800,5))
 ground_surface.fill('black')
 
-score_surface = test_font.render('blob runner', True, 'black')
-score_rect = score_surface.get_rect(center = (400, 50))
+#score_surface = test_font.render('blob runner', True, 'black')
+#score_rect = score_surface.get_rect(center = (400, 50))
 
 blob_surface = pygame.image.load('bob.png').convert_alpha()
 blob_rect = blob_surface.get_rect(midbottom = (700, 300 ))
@@ -47,13 +52,14 @@ while True:
             if event.type == pygame.KEYDOWN and pygame.K_SPACE:
                 game_active = True
                 blob_rect.left = 800
+                start_time = pygame.time.get_ticks()
             
     if game_active:  
         screen.blit(sky_surface,(0,0))
         screen.blit(ground_surface,(0,300))
     
-
-        screen.blit(score_surface,score_rect)
+        display_score()
+        #screen.blit(score_surface,score_rect)
 
         screen.blit(blob_surface, blob_rect)
         blob_rect.x -=4
