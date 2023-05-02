@@ -5,6 +5,11 @@ def display_score():
     current_time = pygame.time.get_ticks() - start_time
     score_surface = test_font.render(f'{current_time}',False,'black')
     score_rect = score_surface.get_rect(center = (400,50))
+
+    if current_time >= 10000:
+        screen.blit(beast_mode, beast_rect)
+        blob_rect.x -=10
+
     screen.blit(score_surface, score_rect)
 
 pygame.init()
@@ -30,8 +35,13 @@ blob_rect = blob_surface.get_rect(midbottom = (700, 300 ))
 
 dead_surface = big_font.render('YOU DIED SUCKER', True, 'Black')
 dead_rect = dead_surface.get_rect(midbottom = (400, 200))
+
+beast_mode = test_font.render('BEAST MODE', True, 'Red')
+beast_rect = beast_mode.get_rect(midbottom = (400, 100))
+
 instruction_surface = test_font.render('(press space to try again)',True, 'black')
 instruction_rect = instruction_surface.get_rect(midbottom = (400,300))
+
 player_surface = pygame.image.load('blob.png').convert_alpha()
 player_rect = player_surface.get_rect(midbottom = (50, 300))
 player_gravity = 0
@@ -69,7 +79,7 @@ while True:
         player_rect.y += player_gravity
         if player_rect.bottom >= 300: player_rect.bottom = 300
 
-
+        
 
         screen.blit(player_surface, player_rect)
 
