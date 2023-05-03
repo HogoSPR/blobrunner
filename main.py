@@ -45,7 +45,7 @@ mrbeast_mode_rect = mrbeast_mode.get_rect(midbottom = (400, 100))
 blob_surface = pygame.image.load('bob.png').convert_alpha()
 blob_rect = blob_surface.get_rect(midbottom = (700, 300 ))
 
-mrbeast_surface = pygame.image.load('dabeast.png').convert_alpha()
+mrbeast_surface = pygame.image.load('mrbeast.png').convert_alpha()
 mrbeast_rect = mrbeast_surface.get_rect(midbottom = (50, 300))
 mrbeast_gravity = 0
 
