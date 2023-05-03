@@ -5,10 +5,14 @@ def display_score():
     current_time = pygame.time.get_ticks() - start_time
     score_surface = test_font.render(f'{current_time}',False,'black')
     score_rect = score_surface.get_rect(center = (400,50))
-   
-    if current_time >= 20000:
+    if current_time >= 23000:
+        player_rect.x = 800
+        screen.blit(mrbeast_surface, mrbeast_rect)
+        screen.blit(mrbeast_mode, mrbeast_mode_rect)
+        blob_rect.x -=18
+    elif current_time >= 20000:
         screen.blit(ultrabeast_mode, ultrabeast_rect)
-        blob_rect.x -=17
+        blob_rect.x -=15
     
     elif current_time >= 10000:
         screen.blit(beast_mode, beast_rect)
@@ -35,8 +39,15 @@ ground_surface.fill('black')
 ultrabeast_mode = test_font.render('ULTRA BEAST MODE', True, 'Purple')
 ultrabeast_rect = ultrabeast_mode.get_rect(midbottom = (400, 100))
 
+mrbeast_mode = test_font.render('MRBEAST MODE', True,'Blue')
+mrbeast_mode_rect = mrbeast_mode.get_rect(midbottom = (400, 100))
+
 blob_surface = pygame.image.load('bob.png').convert_alpha()
 blob_rect = blob_surface.get_rect(midbottom = (700, 300 ))
+
+mrbeast_surface = pygame.image.load('dabeast.png').convert_alpha()
+mrbeast_rect = mrbeast_surface.get_rect(midbottom = (50, 300))
+mrbeast_gravity = 0
 
 dead_surface = big_font.render('YOU DIED SUCKER', True, 'Black')
 dead_rect = dead_surface.get_rect(midbottom = (400, 200))
@@ -62,7 +73,10 @@ while True:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player_rect.bottom >= 300:
                     player_gravity = -20
-
+        if game_active:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and mrbeast_rect.bottom >= 300:
+                    mrbeast_gravity = -20
         else:
             if event.type == pygame.KEYDOWN and pygame.K_SPACE:
                 game_active = True
@@ -84,12 +98,15 @@ while True:
         player_rect.y += player_gravity
         if player_rect.bottom >= 300: player_rect.bottom = 300
 
-        
+        mrbeast_gravity += 1
+        mrbeast_rect.y += mrbeast_gravity
+        if mrbeast_rect.bottom >= 300: mrbeast_rect.bottom = 300
 
         screen.blit(player_surface, player_rect)
 
         if blob_rect.colliderect(player_rect):
             game_active = False
+        
     else:
         screen.fill('White')
         screen.blit(dead_surface, dead_rect)
